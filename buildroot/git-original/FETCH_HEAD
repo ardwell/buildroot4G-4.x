@@ -1,0 +1,6 @@
+63cd7b84a331dcba7c53a375cc33f53b6b48474a		branch 'master' of git://git.buildroot.net/buildroot
+1264adda0ec0ec5edaff5e372b97972cee6ae33c	not-for-merge	branch '2012.11.x' of git://git.buildroot.net/buildroot
+8ab57bf9338f3a47683294aed6425f39828cbf80	not-for-merge	branch '2013.08.x' of git://git.buildroot.net/buildroot
+e009e7d8615eec10d2c0c2676ef5a276f0a6a5e2	not-for-merge	branch '2015.08.x' of git://git.buildroot.net/buildroot
+9f0610c188007ee481508d453b062d77614c153d	not-for-merge	branch '2015.11.x' of git://git.buildroot.net/buildroot
+2dfabd10d1e484d84c0e6b5a58ab43d131ca3230	not-for-merge	branch 'next' of git://git.buildroot.net/buildroot
