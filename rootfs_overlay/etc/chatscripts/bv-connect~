@@ -1,0 +1,33 @@
+# This is the chatscript file located at /etc/chatscript/generic-connect
+# The APN is provided from the pppd configuration file /etc/ppp/peers/bv4g and is
+# referenced in this file as \T
+
+# see man page for chat.
+
+# There is no actual authentication in terms of use name and password for the ISP
+
+TIMEOUT   10
+ABORT     BUSY
+ABORT     'NO ANSWER'
+ABORT     "NO CARRIER"
+ABORT     VOICE
+ABORT     "NO DIALTONE"
+ABORT     'ERROR'
+SAY       ' Starting GPRS connect script with ISP Id'
+
+""        'ATZ'
+OK        'ATQ0 V1 E1 S0=0 &C1 &D2 +FCLASS=0'
+
+SAY       'Setting APN\n'
+OK        'AT+CGDCONT=1,"IP","\T"'
+
+ABORT     'NO CARRIER'
+SAY       'Dialing...'
+OK        'ATDT*99***1#'
+CONNECT
+
+
+
+
+
+

@@ -1,0 +1,79 @@
+#! /bin/sh
+#
+# init.d script to configure device as a wpa-supplicant 
+#
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DESC="set-up and start as wpa-supplicant"
+NAME=wifi-mode
+
+# If eth0 is UP then we don't start wlan0.
+
+# There is not output from this command. Check $?
+ip addr | grep -Eq ': eth0:.*state UP'
+
+if [ $? == 0 ]; then
+  # eth0 is UP so don't try and start wlan0
+  exit 1
+fi
+
+# We have to handle the option of two possible WNIC chipsets. Broadcom and Reaaltek
+# This is strange. I've seen in tests two different product ids for the Broadcom chipset
+# as bd17 and 0bdc. 
+WNIC=`lsusb | awk ' $6 == "0a5c:bd17" { print "broadcom";next } $6 == "0a5c:0bdc" {print "broadcom";next} $6 == "0bda:018a" { print "realtek";next } ' `
+
+start() 
+{
+	if [ ! -z $( pidof wpa_supplicant) ]; then $0 stop; fi
+
+	# We don't use start-stop-daemon as wpa_supplicant uses the -B option
+  if [ $WNIC = "broadcom" ]; then
+    wpa_supplicant -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlan0 -D nl80211 -B -P /var/run/wpa-supplicant.wlano.pid
+  elif [ $WNIC = "realtek" ]; then
+    wpa_supplicant -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlan0 -D wext -B -P /var/run/wpa-supplicant.wlano.pid
+  fi
+	
+	udhcpc -R -n -p /var/run/udhcpc.wlan0.pid -i wlan0
+}
+
+stop()
+{
+	# Stop any running wpa_supplicant process
+	if [ ! -z $( pidof wpa_supplicant) ]; then 
+		echo "wpa_supplicant stopping ..."
+		kill `pidof wpa_supplicant` 
+		kill `cat /var/run/udhcpc.wlan0.pid`
+	fi
+}
+
+
+# Read config file if it is present.
+if [ -r /etc/default/$NAME ]; then
+	. /etc/default/wifi-mode
+
+	if [ $WIFI_MODE != "WPA_SUPPLICANT" ]; then exit 0; fi
+
+else
+	exit 0
+fi
+
+
+
+case "$1" in
+  start)
+		start
+	;;
+  stop) 
+		stop
+	;;
+  restart) echo "Restarting"
+	$0 stop
+	sleep 1
+	$0 start
+	;;
+  *) echo "Usage: $SCRIPTNAME {start|stop|restart}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

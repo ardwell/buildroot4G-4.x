@@ -1,0 +1,79 @@
+# example configuration for a dialup connection authenticated with PAP or CHAP
+# 
+# This is the pppd configuration file for the BitVu 4G modem connection.
+#
+# This is the default configuration used by pon(1) and poff(1).
+# See the manual page pppd(8) for information on all the options.
+
+# MUST CHANGE: replace myusername@realm with the PPP login name given to
+# your by your provider.
+# There should be a matching entry with the password in /etc/ppp/pap-secrets
+# and/or /etc/ppp/chap-secrets.
+user ""
+
+# MUST CHANGE: replace ******** with the phone number of your provider.
+# The /etc/chatscripts/pap chat script may be modified to change the
+# modem initialization string.
+
+# The 'iD' provider is www.idmobile.co.uk (Carphone Warehouse) 
+connect "/usr/sbin/chat -v -T Id -f /etc/chatscripts/bv4g-connect "
+
+# Serial device to which the modem is connected.
+/dev/ttyACM0
+
+# Speed of the serial line.
+460800
+
+#-------------------PPPD options----------------------------------
+# Assumes that your IP address is allocated dynamically by the ISP.
+noipdefault
+
+# Try to get the name server addresses from the ISP.
+usepeerdns
+
+netmask 255.255.255.0
+# Use this connection as the default route.
+defaultroute
+
+# Makes pppd "dial again" when the connection is lost.
+persist
+
+# Do not ask the remote to authenticate.
+noauth
+
+# Do not detach from the terminal i.e. don't run in the background
+nodetach
+
+# Create a lock file to gain exclusive access to the modem (in /var/run ?)
+lock
+
+# Don't use the modem control lines. (Not sure if we need this
+local
+
+# PPPD will log contents of control packets send and received. Uses syslog. Will this work without syslog
+# and when we use the 'logfile' and 'record' option as below?
+debug
+
+# Use hardware flow control
+crtscts
+
+# PPPD will take peer to be dead if after 'n' lcp echo requests are sent and there is no reply
+lcp-echo-failure 3
+
+# Send an LCP echo request every 600 seconds
+lcp-echo-interval 600
+
+lcp-max-configure 20
+
+lcp-max-failure 10
+
+# Append log messages to file /etc/ppp/ppp-logfile
+logfile /etc/ppp/ppp-logfile
+
+# Append all characters sent and received to file name /etc/ppp/ppp-iofile
+record /etc/ppp/ppp-iofile
+
+
+
+
+

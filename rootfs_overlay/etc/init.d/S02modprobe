@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Load modules 
+#
+# There is only one module to load. From make linux-menuconfig this module
+# can't be make 'built-in', which would then make this little init.d script redundant.
+# See comment http://buildroot-busybox.2317881.n4.nabble.com/buildroot-and-kernel-modules-td47148.html
+#
+
+modprobe brcmfmac
+
+exit $?
+
