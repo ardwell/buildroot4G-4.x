@@ -1,0 +1,28 @@
+
+BusyBox configuration
+=====================
+=====================
+
+BusyBox has its own configuration file in .../buildroot/package/busybox/busybox.config
+
+When using make 'busybox-mennuconfig' you have to actually load this specific busybox configuration file using 
+the full path to the file, _before_ you start making any changes. (This is a pain. I create the full path in a separate document that I can the just cut and paste).
+
+Now make any changes to busybox that you require.
+
+When saving the changes you have to specifically set the full path to the busybox.config file again. 
+
+Configuring which BusyBox configuration file to use in menuconfig
+=================================================================
+=================================================================
+
+When using 'make menuconfig' check that 
+Target packages
+	-*- BusyBox
+		(path to busybox configuraiton file. i.e. package/busybox/busybox.config)
+
+
+
+There may be an easier way to do all this but I've not found it yet.
+
+

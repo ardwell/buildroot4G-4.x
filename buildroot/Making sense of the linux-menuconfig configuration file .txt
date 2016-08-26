@@ -1,0 +1,48 @@
+Making sense of Buildroot and linux-menuconfig
+
+I tend to forget the details when using buildroot after not having used it for weeks; here I've written down some of the details when using the make xxxx-menuconfig options.
+
+I've been using buildroot and linux-menuconfig for some time now but never asked myself 'Which 'configuration' file does linux-menuconfig read when starting up?' 
+
+I think that when a new project is started it uses default configuration file(s) and the linux-menuconfig 'configuration file' is read. This configuration file is ../output/build/linux-<###>/.config. When the linux menuconfig is changed and the menu option 'Save' is invoked and the .config file is updated.
+
+Normally when I save changes relating to the linux-menuconfig I don't overwrite the .config file but instead enter a new location for the saved configutaion; something like .../buildroot/.bitvu-kernel-config-060616. I indicate the date of the kernel configuration file by day, month and year. There is nothing actually wrong in doing it this way but my point here is that there is a different way to achieve the same thing my using the .config file.
+
+
+Multiple .config files.
+
+To make matters complicated there are (at least two) .config file in use.
+
+1) .config default file for the make linux-menuconfig output. See above paragraphs
+
+2) .config file used to record changes to make busybox-menuconfig
+3) .config file used to record changes to make mennuconfig
+
+For 2) and 3) it's best to leave the default .config file as used by busybox-menuconfig and menuconfig. When all changes have been made to busybox-menuconfig and menuconfig then copy the .config file to something more appropriate. I used.config-ddmmyy i.e. .config-230816
+
+The .config file does contain a location for the linux-menuconfig file name so that you can have multiple linux-mennuconfig files as well. I use names like .bitvu-kernel-config-220816
+
+Running the make command.
+
+After configurations have been completed use 'make V=1 2>&1 | tee buildLog' to build the kernel and file system. Again note that make uses the .config file for building. If you're not sure what the current .config file contains then copy a previously saved .config' file to .config.
+
+Following has been copied from the Buildroot on-line manual.
+9.3. Storing the Buildroot configuration
+The Buildroot configuration can be stored using the command make savedefconfig.
+This strips the Buildroot configuration down by removing configuration options that are at their default value. The result is stored in a file called defconfig. If you want to save it in another place, change the BR2_DEFCONFIG option in the Buildroot configuration itself, or call make with make savedefconfig BR2_DEFCONFIG=<path-to-defconfig>.
+The recommended place to store this defconfig is configs/<boardname>_defconfig. If you follow this recommendation, the configuration will be listed in make help and can be set again by running make <boardname>_defconfig.
+Alternatively, you can copy the file to any other place and rebuild with make defconfig BR2_DEFCONFIG=<path-to-defconfig-file>.
+9.4. Storing the configuration of other components
+The configuration files for BusyBox, the Linux kernel, Barebox, U-Boot and uClibc should be stored as well if changed. For each of these components, a Buildroot configuration option exists to point to an input configuration file, e.g. BR2_LINUX_KERNEL_CUSTOM_CONFIG_FILE. To store their configuration, set these configuration options to a path where you want to save the configuration files, and then use the helper targets described below to actually store the configuration.
+As explained in Section 9.1, “Recommended directory structure”, the recommended path to store these configuration files is board/<company>/<boardname>/foo.config.
+Make sure that you create a configuration file before changing the BR2_LINUX_KERNEL_CUSTOM_CONFIG_FILE etc. options. Otherwise, Buildroot will try to access this config file, which doesn’t exist yet, and will fail. You can create the configuration file by running make linux-menuconfig etc.
+Buildroot provides a few helper targets to make the saving of configuration files easier.
+make linux-update-defconfig saves the linux configuration to the path specified by BR2_LINUX_KERNEL_CUSTOM_CONFIG_FILE. It simplifies the config file by removing default values. However, this only works with kernels starting from 2.6.33. For earlier kernels, use make linux-update-config. 
+make busybox-update-config saves the busybox configuration to the path specified by BR2_PACKAGE_BUSYBOX_CONFIG. 
+make uclibc-update-config saves the uClibc configuration to the path specified by BR2_UCLIBC_CONFIG. 
+make barebox-update-defconfig saves the barebox configuration to the path specified by BR2_TARGET_BAREBOX_CUSTOM_CONFIG_FILE. 
+make uboot-update-defconfig saves the U-Boot configuration to the path specified by BR2_TARGET_UBOOT_CUSTOM_CONFIG_FILE. 
+For at91bootstrap3, no helper exists so you have to copy the config file manually to BR2_TARGET_AT91BOOTSTRAP3_CUSTOM_CONFIG_FILE. 
+
+
+
