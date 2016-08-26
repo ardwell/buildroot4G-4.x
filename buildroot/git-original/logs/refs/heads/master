@@ -1,3 +1,0 @@
-0000000000000000000000000000000000000000 4896b7c96fa67ea55d4f5dfdea2f5187eb46c554 Ed Sewell <es@bitvu.com> 1461324250 +0100	clone: from git://git.buildroot.net/buildroot
-4896b7c96fa67ea55d4f5dfdea2f5187eb46c554 63cd7b84a331dcba7c53a375cc33f53b6b48474a Ed Sewell <es@bitvu.com> 1462258223 +0100	pull: Fast-forward
-63cd7b84a331dcba7c53a375cc33f53b6b48474a 0deed78fd29a310ecd8f8e1cd910aa95ac00eb98 Ed Sewell <es@bitvu.com> 1462366945 +0100	commit: This is a working .config for 4.4.8 using the default bcmrpi
