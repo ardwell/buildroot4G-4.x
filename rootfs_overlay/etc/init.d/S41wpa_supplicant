@@ -20,7 +20,8 @@ fi
 # We have to handle the option of two possible WNIC chipsets. Broadcom and Reaaltek
 # This is strange. I've seen in tests two different product ids for the Broadcom chipset
 # as bd17 and 0bdc. 
-WNIC=`lsusb | awk ' $6 == "0a5c:bd17" { print "broadcom";next } $6 == "0a5c:0bdc" {print "broadcom";next} $6 == "0bda:018a" { print "realtek";next } ' `
+WNIC=`lsusb | awk ' $6 == "0a5c:bd17" { print "broadcom";next } $6 == "0a5c:0bdc" {print "broadcom";next} \
+                  $6 == "0bda:018a" { print "realtek";next } $6 == "0bda:8193" {print "realtek";next} ' `
 
 start() 
 {
@@ -30,7 +31,7 @@ start()
   if [ $WNIC = "broadcom" ]; then
     wpa_supplicant -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlan0 -D nl80211 -B -P /var/run/wpa-supplicant.wlano.pid
   elif [ $WNIC = "realtek" ]; then
-    wpa_supplicant -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlan0 -D wext -B -P /var/run/wpa-supplicant.wlano.pid
+    wpa_supplicant -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlan0 -D nl80211,wext -B -P /var/run/wpa-supplicant.wlano.pid
   fi
 	
 	udhcpc -R -n -p /var/run/udhcpc.wlan0.pid -i wlan0
