@@ -7,7 +7,6 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 DESC="set-up and start as access point"
 MODE_FILE=/etc/default/wifi-mode
 
-
 # Gracefully exit if the package has been removed.
 # If the file /etc/default/wifi-mode is not present then exit gracefully.
 #
@@ -19,29 +18,39 @@ start()
   # We have to handle the option of two possible WNIC chipsets. Broadcom and Reaaltek
 	# This is strange. I've seen in tests two different product ids for the Broadcom chipset
 	# as bd17 and 0bdc. 
-  WNIC=`lsusb | awk ' $6 == "0a5c:bd17" { print "broadcom";next } $6 == "0a5c:0bdc" {print "broadcom";next} $6 == "0bda:018a" { print "realtek";next } ' `
+  WNIC=`lsusb | awk ' $6 == "0a5c:bd17" { print "broadcom";next } $6 == "0a5c:0bdc" {print "broadcom";next} \
+                $6 == "0bda:018a" { print "realtek";next } $6 == "0bda:8193" {print "realtek-8192du";next} ' `
 
 # echo $WNIC
 
   if [ "$WNIC" = "broadcom" ]; then
 
-  	if [ ! -z $( pidof hostapd) ]; then $0 stop; fi
+    if [ ! -z $( pidof hostapd) ]; then $0 stop; fi
 
     # Modify the /etc/hostapd/hostapd.conf file appropriately
     sed -i 's/driver=.*/driver=nl80211/;s/manufacturer=.*/manufacturer=Broadcom/;s/device_name=.*/device_name=BRCM43236/' /etc/hostapd/hostapd.conf
-  	hostapd -e /dev/random -B /etc/hostapd/hostapd.conf
+    hostapd -e /dev/random -B /etc/hostapd/hostapd.conf
 		usleep 10000
   elif [ "$WNIC" = "realtek" ]; then
 
-  	if [ ! -z $( pidof hostapd-rtl871xdrv ) ]; then $0 stop; fi
+    if [ ! -z $( pidof hostapd-rtl871xdrv ) ]; then $0 stop; fi
 
     sed -i 's/driver=.*/driver=rtl871xdrv/;s/manufacturer=.*/manufacturer=Realtek/;s/device_name=.*/device_name="Wireless AP"/' /etc/hostapd/hostapd.conf
-  	hostapd-rtl871xdrv -P /var/run/hostapd-rtl871xdrv.pid -B /etc/hostapd/hostapd.conf
-		usleep 10000
+    hostapd-rtl871xdrv -P /var/run/hostapd-rtl871xdrv.pid -B /etc/hostapd/hostapd.conf
+
+  elif [ "$WNIC" = "realtek-8192du" ]; then
+
+    if [ ! -z $( pidof hostapd) ]; then $0 stop; fi
+
+    # Modify the /etc/hostapd/hostapd.conf file appropriately
+    sed -i 's/driver=.*/driver=nl80211/;s/manufacturer=.*/manufacturer=Realtek/;s/device_name=.*/device_name=RTL8192DU/' /etc/hostapd/hostapd.conf
+    # outputs debug information as it processes the configuration file.
+    # hostapd -ddd -K -e /dev/random -B /etc/hostapd/hostapd.conf
+    hostapd -e /dev/random -B /etc/hostapd/hostapd.conf
   fi 
 
-	ip addr add $AP_IPADDR dev wlan0
-	dnsmasq -C /etc/dnsmasq/dnsmasq.conf
+  ip addr add $AP_IPADDR dev wlan0
+  dnsmasq -C /etc/dnsmasq/dnsmasq.conf
 }
 
 stop()
@@ -57,7 +66,6 @@ stop()
 		echo "hosapd-rtl871xdrv stopping ..."
 		kill `cat /var/run/hostapd-rtl871xdrv.pid` 
 	fi
-
 
 	if [ ! -z "$(pidof dnsmasq)" ]; then 
 		echo "dnsmasq stopping ..."
