@@ -12,14 +12,17 @@ MODE_FILE=/etc/default/wifi-mode
 #
 test -e $MODE_FILE || exit 0
 
-
 start() 
 {
-  # We have to handle the option of two possible WNIC chipsets. Broadcom and Reaaltek
+  # We have to handle the possibility of several possible WiFi chipsets.
 	# This is strange. I've seen in tests two different product ids for the Broadcom chipset
 	# as bd17 and 0bdc. 
-  WNIC=`lsusb | awk ' $6 == "0a5c:bd17" { print "broadcom";next } $6 == "0a5c:0bdc" {print "broadcom";next} \
-                $6 == "0bda:018a" { print "realtek";next } $6 == "0bda:8193" {print "realtek-8192du";next} ' `
+  WNIC=`lsusb | awk ' $6 == "0a5c:bd17" { print "broadcom";next }\
+                      $6 == "0a5c:0bdc" {print "broadcom";next} \
+                      $6 == "0bda:018a" { print "realtek";next }\
+                      $6 == "0bda:8193" {print "realtek-8192du";next} \
+                      $6 == "2357:0109" {print "realtek-8192eu";next}' `
+
 
 # echo $WNIC
 
@@ -36,7 +39,7 @@ start()
     if [ ! -z $( pidof hostapd-rtl871xdrv ) ]; then $0 stop; fi
 
     sed -i 's/driver=.*/driver=rtl871xdrv/;s/manufacturer=.*/manufacturer=Realtek/;s/device_name=.*/device_name="Wireless AP"/' /etc/hostapd/hostapd.conf
-    hostapd-rtl871xdrv -P /var/run/hostapd-rtl871xdrv.pid -B /etc/hostapd/hostapd.conf
+    hostapd-rtl871xdrv -P /var/run/hostapd.pid -B /etc/hostapd/hostapd.conf
 
   elif [ "$WNIC" = "realtek-8192du" ]; then
 
@@ -47,6 +50,16 @@ start()
     # outputs debug information as it processes the configuration file.
     # hostapd -ddd -K -e /dev/random -B /etc/hostapd/hostapd.conf
     hostapd -e /dev/random -B /etc/hostapd/hostapd.conf
+  elif [ "$WNIC" = "realtek-8192eu" ]; then
+
+    if [ ! -z $( pidof hostapd-rtl9871xdrv) ]; then $0 stop; fi
+
+    # Modify the /etc/hostapd/hostapd.conf file appropriately
+    sed -i 's/driver=.*/driver=rtl871xdrv/;s/manufacturer=.*/manufacturer=Realtek/;s/device_name=.*/device_name=RTL8192EU/' /etc/hostapd/hostapd.conf
+    # outputs debug information as it processes the configuration file.
+    # hostapd-rtl871xdrv -ddd -K -e /dev/random -B /etc/hostapd/hostapd.conf
+    hostapd-rtl871xdrv -e /dev/random -B -P /var/run/hostapd.pid /etc/hostapd/hostapd.conf
+
   fi 
 
   ip addr add $AP_IPADDR dev wlan0
@@ -55,16 +68,11 @@ start()
 
 stop()
 {
-	# Stop any running hostapd and dnsmasq processes
-	if [ ! -z $(pidof hostapd) ]; then 
-		echo "hosapd stopping ..."
-		kill `pidof hostapd` 
-	fi
 
 	# Stop any running hostapd-rtl871xdrv and dnsmasq processes
-	if [ ! -z $(cat /var/run/hostapd-rtl871xdrv.pid) ]; then 
-		echo "hosapd-rtl871xdrv stopping ..."
-		kill `cat /var/run/hostapd-rtl871xdrv.pid` 
+	if [ -e /var/run/hostapd.pid ] && [ ! -z $(cat /var/run/hostapd.pid) ]; then 
+		echo "hostapd stopping ..."
+		kill `cat /var/run/hostapd.pid` 
 	fi
 
 	if [ ! -z "$(pidof dnsmasq)" ]; then 
@@ -72,7 +80,6 @@ stop()
 		killall dnsmasq 
 	fi
 }
-
 
 # Read config file
 if [ -r $MODE_FILE ]; then
