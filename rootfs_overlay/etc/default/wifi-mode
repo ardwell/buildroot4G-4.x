@@ -7,3 +7,8 @@ AP_IPADDR=192.168.16.1/24
 AP_MASK=255.255.255.0
 AP_ROUTERADDR=192.168.1.1
 
+
+# For in-house work we may want to have ethernet and wlan active at the same time
+# The default is to now allow this combination
+ALLOW_ETH_AND_WLAN=0
+
