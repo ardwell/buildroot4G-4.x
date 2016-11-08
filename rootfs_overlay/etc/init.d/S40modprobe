@@ -1,0 +1,21 @@
+#!/bin/sh
+#
+# Start mdev....
+#
+
+case "$1" in
+  start)
+	echo "Starting modprobe..."
+	# coldplug modules
+	find /sys/ -name modalias | xargs sort -u | xargs modprobe -abq
+	;;
+  stop)
+	;;
+  restart|reload)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
