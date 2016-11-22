@@ -1,0 +1,106 @@
+Manifest file :
+
+dd-production-sdcard.sh
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+This script is to be used in conjuction with an sd card that has already been formatted 
+using the mk-production-sdcard.sh scripti (it won't work with any old sd card). 
+It reads the sd card and produces an output 'img' file of the sd card. 
+
+Example use: dd-production-sdcard.sh /dev/sd[x] my-sdcard.img
+
+The 'img' file produced is of a fixed size.
+
+You can copy the produced 'img' file to another sd card using the command [sudo] dd if=<img file> of=/dev/sd[x]
+
+mk-production-sdcard.sh
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Run this script to create a 'production' formatted sd card. The sd card should be 8GB. It does not have 
+to be pre-formatted. Any exising data on the sd card will be deleted.
+
+Example usage: [sudo] mk-production-sdcard.sh /dev/sd[x]
+
+
+If you want to examine the formatted card use the following command.
+
+sudo parted -s unit mib print free /dev/sd[x]
+
+The output should be:
+
+Disk /dev/sdx: 7420MiB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+
+Number  Start    End      Size     Type      File system  Flags
+        0.03MiB  40.0MiB  40.0MiB            Free Space
+ 1      40.0MiB  100MiB   60.0MiB  primary   fat32        lba
+ 2      100MiB   2100MiB  2000MiB  primary   ext4
+ 3      2100MiB  4100MiB  2000MiB  primary   ext4
+ 4      4100MiB  7400MiB  3300MiB  extended               lba
+ 5      4102MiB  5502MiB  1400MiB  logical   ext4
+ 6      5502MiB  6902MiB  1400MiB  logical   ext4
+ 7      6902MiB  7400MiB  498MiB   logical   ext4
+        7400MiB  7420MiB  20.0MiB            Free Space
+
+------------------------------------------------o0o----------------------------------------------
+
+S021upgrade
+~~~~~~~~~~~~
+
+This is the /etc/init.d script that checks the /mnt/upgrade file system for any 'package.zip' 
+file. Read the contents of the file to understand the upgrade process.
+
+The package.zip file has to contain an 'install' bash script and any other necessary files
+that the install script will operate on.
+
+The package.zip is created externally and downloaded to the /mnt/upgrade file system root.
+On next reboot the /etc/init.d/S021upgrade script will operate on the package.zip file.
+
+At the end of the operation the package.zip file is deleted.
+
+
+--------------------------------------o0o------------------------------------------------------
+fs-install-template
+~~~~~~~~~~~~~~~~~~~~
+
+This is an example of an 'install' script. It will install a shadow root file system 
+into /mnt/shadow-rootfsi and modify the cmdline.txt file (on /mnt/boot). 
+
+The root file system to install would be included in the externally produced package.zip downloaded file.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

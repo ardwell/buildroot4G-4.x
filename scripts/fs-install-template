@@ -1,0 +1,78 @@
+#!/bin/bash
+
+# This script will be run automatically by the /etc/init.d/S021upgrade script 
+# This script is to install a file system on the currently non-active file system partition.
+# Presently the possible file system partions are 2 and 3. This script then installs the provided 
+# file system on the non-active partition and changes the cmdline.txt file to boot from this 
+# partition on system reboot. 
+
+# To determine which partition is the active partition check in the file 
+# cmdline.txt in the boot partition.
+
+function get_unused_rootfs_partition()
+{
+  for i in 2 3  
+  do
+   cat /mnt/boot/cmdline.txt | grep mmcblk0p$i > /dev/null
+   if [ $? -eq 1 ]; then
+    # echo "First possible non-active root fs partition is /dev/mmcblk0"$i
+    echo $i
+    return
+   fi
+  done
+
+  return 0 
+}
+
+mkdir -p /mnt/boot
+mount /dev/mmcblk0p1 /mnt/boot
+
+# Find the first sd partition that is _not_ the current active root file system
+
+use_part=$(get_unused_rootfs_partition)
+
+echo "Use device partition = mmcblk0p"$use_part
+
+# Check if the file system on partition $use_part has been mounted.
+
+cat /etc/mtab | grep mmcblk0p$use_part > /dev/null
+
+if [ $? -eq 1 ]; then
+  if [ -b /dev/mmcblk0p$use_part ]; then
+    echo "Mounting device /dev/mmcblk0p$use_part"
+    mount -t ext4 /dev/mmcblk0p$use_part /mnt/shadow-rootfs
+  fi
+fi
+
+# Remove all files from /mnt/shadow-rootfs
+rm -rf /mnt/shadow-rootfs/*
+
+tar -xvf ./rootfs.tar -C /mnt/shadow-rootfs
+rc=$?
+
+echo "Doing tar -xvf ./rootfs.tar -C /mnt/shadow-rootfs Exit code $rc"
+
+if [ $? -eq 0 ]; then
+  sync
+  rc=0
+  result="installed rootfs to mmcblk0p3 mounted on /mnt/shadow-rootfs"
+	logger -s -p user.info installed rootfs to /dev/mmvblk0p3 mounted on /mnt/shadow-rootfs
+else
+  rc=1
+  result="error couldn't install rootfs to mmcblk0p3"
+	logger -s -p user.info could not install rootfs to /dev/mmvblk0p3 mounted on /mnt/shadow-rootfs
+fi
+
+# Update install log
+
+echo `date` " $result" >> ../Install.log
+
+# edit the cmdline.txt file to changes the rootfs partition.
+
+sed -i s/mmcblk0p[2..3]/mmcblk0p$use_part/g /mnt/boot/cmdline.txt
+
+umount /mnt/boot
+umount /mnt/shadow-rootfs
+
+exit $rc
+
