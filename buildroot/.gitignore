@@ -19,7 +19,6 @@
 /.config.cmd
 /.config.old
 /..config.tmp
-/.config
 *.depend
 *.o
 /*.patch
