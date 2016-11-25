@@ -1,5 +1,5 @@
 #
-
+rootfs_overlay/lib/firmware/*
 omxplayer-build
 FFmpeg-sources
 
