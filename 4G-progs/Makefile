@@ -17,25 +17,25 @@ PATH := /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host
 all: hello at-cmd canon-input modem-command non-canon-input urc-input gpio-interrupt
 
 hello : hello-world.cpp
-	$(toolchain_prefix)gcc -o hello $? --sysroot=$(sysroot)
+	$(toolchain_prefix)gcc -o bin/hello $? --sysroot=$(sysroot)
 
 at-cmd : at-cmd.c
-	$(toolchain_prefix)gcc -o at-cmd $? --sysroot=$(sysroot)
+	$(toolchain_prefix)gcc -o bin/at-cmd $? --sysroot=$(sysroot)
 
 canon-input : canon-input.c
-	$(toolchain_prefix)gcc -o canon-input $? --sysroot=$(sysroot)
+	$(toolchain_prefix)gcc -o bin/canon-input $? --sysroot=$(sysroot)
 
 urc-input : urc-input.c
-	$(toolchain_prefix)gcc -o urc-input $? --sysroot=$(sysroot)
+	$(toolchain_prefix)gcc -o bin/urc-input $? --sysroot=$(sysroot)
 
 non-canon-input : non-canon-input.c
-	$(toolchain_prefix)gcc -o non-canon-input $? --sysroot=$(sysroot)
+	$(toolchain_prefix)gcc -o bin/non-canon-input $? --sysroot=$(sysroot)
 
 modem-command : modem-command.c
-	$(toolchain_prefix)gcc -o modem-command $? --sysroot=$(sysroot)
+	$(toolchain_prefix)gcc -o bin/modem-command $? --sysroot=$(sysroot)
 
 gpio-interrupt : gpio-interrupt.c
-	$(toolchain_prefix)gcc -o gpio-interrupt $? --sysroot=$(sysroot)
+	$(toolchain_prefix)gcc -o bin/gpio-interrupt $? --sysroot=$(sysroot)
 
 mmal-main: mmal-main.c
 	$(toolchain_prefix)gcc -o $@ $? -I$(sysroot)/usr/include/interface/vcos/pthreads/ -I$(sysroot)/usr/include/interface/vmcs_host/linux/ \
@@ -43,4 +43,5 @@ mmal-main: mmal-main.c
 
 
 clean:
-	touch *.c *.cpp	
+	touch *.c *.cpp
+	rm -f bin/*	
