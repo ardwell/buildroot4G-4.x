@@ -1,0 +1,12 @@
+#! /bin/sh
+
+
+# Just some AT commands to set the modem to the default mode and then
+# enable some URC via appropriate AT commands
+
+/home/modem-command ttyACM0 'AT&F'
+/home/modem-command ttyACM0 'AT&V'
+/home/modem-command ttyACM0 'AT+CFUN=1'
+/home/modem-command ttyACM0 'AT^SCKS=1'
+/home/modem-command ttyACM0 'AT+CREG=2'
+

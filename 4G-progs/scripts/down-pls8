@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Bring the pls8 down in a controlled manner.
+
+./modem-command ttyACM1 AT^SMSO
+
+exit $?

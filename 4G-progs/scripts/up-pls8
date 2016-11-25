@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# This will attempt to power up the PLS8-E modem and initialise it
+# before starting the pppd.
+
+
+# The information that I had available was very limited and can be read from the following references.
+# Day journal of 7/1/16 mentions pins IGT, EMERG_OFF and PWR_IND. Access to these pins is reqiured to power up/down
+# Gemalto modem chip.
+# 
+# Skype message on 7/1/16 and 10/3/16
+# See the Gemalto pdf pls8-e_hd_v0211a.pdf for the only source of information that I have.
+
+
+# Check modem's current state
+
+read-pin.sh 42
+
+# echo "last command $?"
+
+if [ $? -eq 1 ]; then
+  
+  # echo "PLS8-E powering up"
+  logger -t root -p user.debug "up-pls8: Powering up pls8-e"
+
+  write-pin.sh 36 0 && sleep 1 && write-pin.sh 36 1
+
+  count=0
+
+  while [[ ! -e /dev/ttyACM0 && ! -e /dev/ttyACM1 \
+        && ! -e /dev/ttyACM2 && ! -e /dev/ttyACM3 \
+        && ! -e /dev/ttyACM4 ]]; do
+    sleep 1
+    count=$(expr $count + 1)
+    if [ $count -eq 20 ]; then logger -t root -p user.err "up-pls8: Failed to create devices /dev/ttyACM"; exit 1; fi
+
+    # printf "Waiting for devices ttyACM*\n"
+  done
+
+  # printf "Modem up and ready for commands ok\n"
+
+  ./modem-command ttyACM1 AT^SSRVSET="actSrvSet",2 
+
+  logger -t root -p user.info "up-pls8: Device initialised OK"
+
+fi
+
+exit 0

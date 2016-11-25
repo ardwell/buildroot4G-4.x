@@ -1,0 +1,11 @@
+#!/bin/bash
+
+
+# Toggle the EMERG_OFF pin. This requires a power cycle to bring the Gemalto 4G up again.
+
+./write-pin.sh 39 1
+sleep 1
+./write-pin.sh 39 0
+
+exit $?
+
