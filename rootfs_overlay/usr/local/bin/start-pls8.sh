@@ -7,11 +7,11 @@
 
 
 write-pin.sh 36 0
-sleep 1
+sleep 0.2 
 
 write-pin.sh 36 1
 
-# ./read-pin.sh 39
-# ./read-pin.sh 42 
+# read-pin.sh 39
+# read-pin.sh 42 
 
 
