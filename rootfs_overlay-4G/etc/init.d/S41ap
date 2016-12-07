@@ -1,0 +1,113 @@
+#! /bin/sh
+#
+# init.d script to configure device as a access point (AP) 
+#
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DESC="set-up and start as access point"
+MODE_FILE=/etc/default/wifi-mode
+
+# Gracefully exit if the package has been removed.
+# If the file /etc/default/wifi-mode is not present then exit gracefully.
+#
+test -e $MODE_FILE || exit 0
+
+start() 
+{
+  # We have to handle the possibility of several possible WiFi chipsets.
+	# This is strange. I've seen in tests two different product ids for the Broadcom chipset
+	# as bd17 and 0bdc. 
+  WNIC=`lsusb | awk ' $6 == "0a5c:bd17" { print "broadcom";next }\
+                      $6 == "0a5c:0bdc" {print "broadcom";next} \
+                      $6 == "0bda:018a" { print "realtek";next }\
+                      $6 == "0bda:8193" {print "realtek-8192du";next} \
+                      $6 == "2357:0109" {print "realtek-8192eu";next}' `
+
+
+# echo $WNIC
+
+  if [ "$WNIC" = "broadcom" ]; then
+
+    if [ ! -z $( pidof hostapd) ]; then $0 stop; fi
+
+    # Modify the /etc/hostapd/hostapd.conf file appropriately
+    sed -i 's/driver=.*/driver=nl80211/;s/manufacturer=.*/manufacturer=Broadcom/;s/device_name=.*/device_name=BRCM43236/' /etc/hostapd/hostapd.conf
+    hostapd -e /dev/random -B /etc/hostapd/hostapd.conf
+		usleep 10000
+  elif [ "$WNIC" = "realtek" ]; then
+
+    if [ ! -z $( pidof hostapd-rtl871xdrv ) ]; then $0 stop; fi
+
+    sed -i 's/driver=.*/driver=rtl871xdrv/;s/manufacturer=.*/manufacturer=Realtek/;s/device_name=.*/device_name="Wireless AP"/' /etc/hostapd/hostapd.conf
+    hostapd-rtl871xdrv -P /var/run/hostapd.pid -B /etc/hostapd/hostapd.conf
+
+  elif [ "$WNIC" = "realtek-8192du" ]; then
+
+    if [ ! -z $( pidof hostapd) ]; then $0 stop; fi
+
+    # Modify the /etc/hostapd/hostapd.conf file appropriately
+    sed -i 's/driver=.*/driver=nl80211/;s/manufacturer=.*/manufacturer=Realtek/;s/device_name=.*/device_name=RTL8192DU/' /etc/hostapd/hostapd.conf
+    # outputs debug information as it processes the configuration file.
+    # hostapd -ddd -K -e /dev/random -B /etc/hostapd/hostapd.conf
+    hostapd -e /dev/random -B /etc/hostapd/hostapd.conf
+  elif [ "$WNIC" = "realtek-8192eu" ]; then
+
+    if [ ! -z $( pidof hostapd-rtl9871xdrv) ]; then $0 stop; fi
+
+    # Modify the /etc/hostapd/hostapd.conf file appropriately
+    sed -i 's/driver=.*/driver=rtl871xdrv/;s/manufacturer=.*/manufacturer=Realtek/;s/device_name=.*/device_name=RTL8192EU/' /etc/hostapd/hostapd.conf
+    # outputs debug information as it processes the configuration file.
+    # hostapd-rtl871xdrv -ddd -K -e /dev/random -B /etc/hostapd/hostapd.conf
+    hostapd-rtl871xdrv -e /dev/random -B -P /var/run/hostapd.pid /etc/hostapd/hostapd.conf
+
+  fi 
+
+  ip addr add $AP_IPADDR dev wlan0
+  dnsmasq -C /etc/dnsmasq/dnsmasq.conf
+}
+
+stop()
+{
+
+	# Stop any running hostapd-rtl871xdrv and dnsmasq processes
+	if [ -e /var/run/hostapd.pid ] && [ ! -z $(cat /var/run/hostapd.pid) ]; then 
+		echo "hostapd stopping ..."
+		kill `cat /var/run/hostapd.pid` 
+	fi
+
+	if [ ! -z "$(pidof dnsmasq)" ]; then 
+		echo "dnsmasq stopping ..."
+		killall dnsmasq 
+	fi
+}
+
+# Read config file
+if [ -r $MODE_FILE ]; then
+	. $MODE_FILE
+
+	if [ $WIFI_MODE != "AP" ]; then exit 0; fi
+
+else
+	exit 0
+fi
+
+
+
+case "$1" in
+  start)
+		start
+	;;
+  stop) 
+		stop
+	;;
+  restart) echo "Restarting"
+	$0 stop
+	sleep 1
+	$0 start
+	;;
+  *) echo "Usage: $SCRIPTNAME {start|stop|restart}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

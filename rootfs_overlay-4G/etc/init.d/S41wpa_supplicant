@@ -1,0 +1,85 @@
+#! /bin/sh
+#
+# init.d script to configure device as a wpa-supplicant 
+#
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DESC="set-up and run as wpa-supplicant"
+NAME=wifi-mode
+
+# Read config file if it is present.
+if [ -r /etc/default/$NAME ]; then
+	. /etc/default/wifi-mode
+
+	if [ $WIFI_MODE != "WPA_SUPPLICANT" ]; then exit 0; fi
+
+else
+	exit 0
+fi
+
+# If eth0 is UP then we don't start wlan0.
+
+# There is no output from this command. Check $?
+ip addr | grep -Eq ': eth0:.*state UP'
+
+if [ $? == 0 ] && [ ! $ALLOW_ETH_AND_WLAN ] ; then
+  # eth0 is UP so don't try and start wlan0, unless overridden
+  exit 1
+fi
+
+# We have to handle the option of two possible WNIC chipsets. Broadcom and Reaaltek
+# This is strange. I've seen in tests two different product ids for the Broadcom chipset
+# as bd17 and 0bdc. 
+WNIC=`lsusb | awk ' $6 == "0a5c:bd17" {print "broadcom";next } \
+                    $6 == "0a5c:0bdc" {print "broadcom";next} \
+                    $6 == "0bda:018a" {print "realtek";next } \
+                    $6 == "0bda:8193" {print "realtek-8192du";next} \
+                    $6 == "2357:0109" {print "realtek-8192eu";next} ' `
+
+start() 
+{
+	if [ ! -z $( pidof wpa_supplicant) ]; then $0 stop; fi
+
+  # wpa_supplicant supports nl80211 and wext so this handles the Realtek USB adapter (WEXT)(deprecated). Newer adapters should use
+  # the nl80211 interface via cfg80211.ko
+
+  wpa_supplicant -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlan0 -D nl80211,wext -B -P /var/run/wpa-supplicant.wlan0.pid
+
+	# We don't use start-stop-daemon as wpa_supplicant uses the -B option
+#  if [ $WNIC = "broadcom" ]; then
+#    wpa_supplicant -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlan0 -D nl80211 -B -P /var/run/wpa-supplicant.wlan0.pid
+#  elif [ $WNIC = "realtek" ]; then
+#    wpa_supplicant -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlan0 -D nl80211,wext -B -P /var/run/wpa-supplicant.wlan0.pid
+#  fi
+	
+	udhcpc -R -A 5 -p /var/run/udhcpc.wlan0.pid -i wlan0
+}
+
+stop()
+{
+	# Stop any running wpa_supplicant process
+	if [ -e /var/run/wpa-supplicant.wlan0.pid ] && [ ! -z $( cat /var/run/wpa-supplicant.wlan0.pid) ]; then 
+		echo "wpa_supplicant and udhcpc are being stopped"
+		kill `cat /var/run/wpa-supplicant.wlan0.pid` 
+		kill `cat /var/run/udhcpc.wlan0.pid`
+	fi
+}
+
+case "$1" in
+  start)
+		start
+	;;
+  stop) 
+		stop
+	;;
+  restart) echo "Restarting"
+	  $0 stop
+	  sleep 1
+	  $0 start
+	;;
+  *) echo "Usage: $SCRIPTNAME {start|stop|restart}" >&2
+	exit 1
+	;;
+esac
+
+exit 0
