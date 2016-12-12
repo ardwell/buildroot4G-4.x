@@ -1,0 +1,49 @@
+#! /bin/bash
+
+
+# Forbidden block drives
+#SDA=/dev/sda
+#SDB=/dev/sdb
+#FORBIDDEN_BLOCK_DEVICE_LIST="/dev/sda /dev/sdb sda sdb"
+
+declare -a BlockDeviceList=("/dev/sda" "/dev/sdb" "sda" "sdb")
+
+: << '!'
+# Get number of input parameters
+# Here doing a string comparision
+if [ "$#" -ne 1 ]; then
+  echo "Illegal number of parameters - string comparision"
+fi
+
+# if working with numbers use. Note the diference in operators between string and numeric operands
+
+if (( $# != 1 )); then
+  echo "Illegal number of parameters- numeric comparision"
+fi
+!
+
+
+for device in "${BlockDeviceList[@]}"
+do
+  # echo "Device is $device"
+		# echo "Looking for string $device in $@"   
+  	# If any argument containorbidden block devices then output a warning and exit
+		if echo "$@" | grep -q "$device"; then
+    	echo "Please check your input parameters very carefully. Do you really mean to use $device?" && exit 0
+  	fi
+done
+
+
+exec "$@"
+
+
+#	for var in "$@"
+#	do
+#		echo "Looking for string $var in $FORBIDDEN_BLOCK_DEVICE_LIST"   
+#  	# If any argument contains forbidden block devices then output a warning and exit
+#		if echo "$device" | grep -q "$var"; then
+#    	echo "Please check your input parameters very carefully. Do you really mean to use $var?" && exit 0
+#  	fi
+#	done
+
+

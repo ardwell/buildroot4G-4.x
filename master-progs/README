@@ -1,0 +1,12 @@
+12/12/16
+
+Now that this repository has two branches I can make a cleaner separation between the files
+that realate to the Freedom/Spark and thoes that are specific to the 4G modem.
+
+This directory is prefixed with 'master-' and is to contain code, binaries and scripts that 
+will be useful for the Freedom and 4G code base.
+
+
+
+
+

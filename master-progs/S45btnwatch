@@ -1,0 +1,27 @@
+#! /bin/bash
+#
+# init.d script to start/stop gpio button watcher 
+#
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+case "$1" in
+  start)
+		/usr/local/bin/gpio-interrupt -D
+	;;
+  stop) 
+		# The gpio-interrupt exports a gpio pin but does not unexport it 
+		if [ -d /sys/class/gpio/gpio30 ]; then echo 30 > /sys/class/gpio/unexport; fi
+		pgrep gpio-interrupt
+		if [ $? -eq 0 ]; then kill `pidof gpio-interrupt`; fi
+	;;
+  restart) echo "Restarting"
+	  $0 stop
+	  $0 start
+	;;
+  *) echo "Usage: $SCRIPTNAME {start|stop|restart}" >&2
+	exit 1
+	;;
+esac
+
+exit 0
