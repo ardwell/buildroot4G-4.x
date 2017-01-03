@@ -64,13 +64,13 @@ int initGpioPin(int pin)
 	#define DEBUG_PRINT2(a, b) 
 #endif
 
-
-	uint64_t firstRange_lower=1001000000LL;
-	uint64_t firstRange_upper=2999999999LL;
-	uint64_t secondRange_lower=3000000000LL;
-	uint64_t secondRange_upper=5999999999LL;
-	uint64_t thirdRange_lower=6000000000LL;
-	uint64_t thirdRange_upper=10000000000LL;
+	// values are in nano seconds
+	uint64_t firstRange_lower=    100000000LL;
+	uint64_t firstRange_upper=    500000000LL;
+	uint64_t secondRange_lower=   501000000LL;
+	uint64_t secondRange_upper= 15000000000LL;
+	uint64_t thirdRange_lower=  15000000000LL;
+	uint64_t thirdRange_upper= 100000000000LL;
 
 
 int GPIO_PIN = 30;
@@ -225,19 +225,19 @@ int main(int argc, char **argv)
 
 				if(t_diff < firstRange_lower)
 				{
-					DEBUG_PRINT(stdout, "NOISE (< 1s) - ignore (%llu)\n", t_diff);
-				}else if((t_diff > firstRange_lower) && (t_diff <firstRange_upper))
+					DEBUG_PRINT(stdout, "NOISE - ignore (%llu)\n", t_diff);
+				}else if((t_diff > firstRange_lower) && (t_diff <= firstRange_upper))
 				{
-					DEBUG_PRINT(stdout, "SHORT (>1s <3s) (%llu)\n", t_diff);
+					DEBUG_PRINT(stdout, "SHORT (%llu)\n", t_diff);
 					int rc = system("/usr/local/bin/restartSS.sh");
-				}else if((t_diff > secondRange_lower) && (t_diff < secondRange_upper))
+				}else if((t_diff > secondRange_lower) && (t_diff <= secondRange_upper))
 				{
 					int rc = system("/usr/local/bin/rebootFreedom.sh");
-					DEBUG_PRINT(stdout, "MEDIUM (>3s <6s) (%llu)\n)", t_diff);
+					DEBUG_PRINT(stdout, "MEDIUM (%llu)\n)", t_diff);
 				}else if((t_diff > thirdRange_lower))
 				{
 					int rc = system("/usr/local/bin/reinstallSS.sh");
-					DEBUG_PRINT(stdout, "LONG (>6s) (%llu)\n", t_diff)
+					DEBUG_PRINT(stdout, "LONG (%llu)\n", t_diff)
 				}
 				
 				DEBUG_PRINT(stdout, "Time interval nano seconds %llu \n", t_diff);
