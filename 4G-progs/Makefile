@@ -5,7 +5,8 @@
 sysroot := ../buildroot/output/staging
 toolchain_prefix := arm-buildroot-linux-gnueabihf-
 
-PATH := /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/bin/:$(PATH)
+#PATH := /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/bin/:$(PATH)
+PATH := $(CURDIR)/../buildroot/output/host/usr/bin/:$(PATH)
 
 # hello-world is trivial but it's a starting point to get the compiler and linker working.
 # at-cmd comiles but does not function correctly. It has been superceeded by canon-input.c
@@ -14,7 +15,13 @@ PATH := /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host
 # serial device is uses canonical mode i.e. input terminated with a \r character. 
 # e.g echo -e 'AT\r' > /dev/ttyACM1  # Don't forget the '-e' switch for the echo command.
 
+.PHONY: check all
+
+check:
+	@if [ ! -d "./bin" ]; then mkdir bin; fi
+
 all: hello at-cmd canon-input modem-command non-canon-input urc-input gpio-interrupt
+	if [ ! -d "./bin" ]; then echo "bin does not exist"; fi
 
 hello : hello-world.cpp
 	$(toolchain_prefix)gcc -o bin/hello $? --sysroot=$(sysroot)
