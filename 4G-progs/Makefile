@@ -5,7 +5,6 @@
 sysroot := ../buildroot/output/staging
 toolchain_prefix := arm-buildroot-linux-gnueabihf-
 
-#PATH := /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/bin/:$(PATH)
 PATH := $(CURDIR)/../buildroot/output/host/usr/bin/:$(PATH)
 
 # hello-world is trivial but it's a starting point to get the compiler and linker working.
