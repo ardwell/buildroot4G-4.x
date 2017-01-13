@@ -1,0 +1,45 @@
+ECS 13/1/17 
+
+The name of this repository, buildroot4G-4.x, is a result of historical incremental development. 
+
+Initiallly is was not a GIT repository but a subdirectoty for development work on the Gemalto 4G
+modem. Later it was enhanced by appending "-4.x" to the directory name to signify that the 
+version of Linux being used was 4.x.
+
+[Originally there was also a subdirectory to handle the building of the OS for the in-house board,
+which was using Linux 3.18.14. This verison of Linux was not usable for some of the later Wi-Fi
+chipsets and it was droped in favour of the single subdirectory buildroot4G-4.x, which now handles
+the building of the 4.x based OS and modem development]
+
+At this point there was a collection of scripts realted to the in-house board (now called Freedom)
+and the Freedom+Gemalto all mixed in together.
+
+It became rather confusing to figure out what script was releted to which functionality so the code was
+restructured to use GIT branches. (On hindsight this would not have been the only way of proceeding. 
+Creating appropriately named sub-directories could have been made to work as well)
+
+This reprository has two branches:
+master
+modem
+
+
+The master branch is were you should start. In the buildroot directory there are two
+important configuration files.
+
+.config
+.bitvu-kernel-config-220816
+
+Both these file are versioned using Git. 
+
+To build the base operating system (currently 4.4.8) enter
+make on the command line when in the .buildroot subcirectory.
+The .bitvu-kernel-config-220816 is the kernel configutaion file i.e specifies which kernel
+modules are included etc (this is the saved output from "make linux-memnuconfig")
+
+
+The 'modem' branch restricts itself to scripts and binaries that are related to the 
+operation of the Gemalto PLS8-E modem.
+
+
+
+
