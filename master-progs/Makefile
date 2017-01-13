@@ -5,7 +5,8 @@
 sysroot := ../buildroot/output/staging
 toolchain_prefix := arm-buildroot-linux-gnueabihf-
 
-PATH := /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/bin/:$(PATH)
+# PATH := /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/bin/:$(PATH)
+PATH := $(CURDIR)/../buildroot/output/host/usr/bin/:$(PATH)
 
 # hello-world is trivial but it's a starting point to get the compiler and linker working.
 # at-cmd comiles but does not function correctly. It has been superceeded by canon-input.c
@@ -26,4 +27,4 @@ gettime : gettime.c
 	$(toolchain_prefix)gcc -o gettime $? --sysroot=$(sysroot)
 
 clean:
-	touch *.c *.cpp	
+	@rm gettime hello gpio-interrupt
