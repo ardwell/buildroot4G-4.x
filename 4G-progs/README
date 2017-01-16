@@ -1,0 +1,13 @@
+at-cmd.c		- Demonstrator to open and configure a modem device port. Reads from the port until a specific character hsa been read
+bin			- Directory for binary files generated
+canon-input.c		- Another program demonstrator for serial port reading. In canonical input processing mode, terminal input is processed in lines 
+			- terminated by newline ('\n'), EOF, or EOL characters. 
+gpio-interrupt.c	- This program also exits in the 'master' branch. 
+hello-world.cpp		- The file name says it all.
+Makefile		- Quess what this file does?
+modem-command.c		- This takes user AT command input and writes it to the modem, the waits for the modem's response.
+modem-command.c-1.c	- A previous version of the modem-command.c file that I (for some reason) did not what to delete. 
+non-canon-input.c	- A demosartator program to use 'raw' or non-canonical mode (when condifured). It was uses as part of the initial usage of the modem
+README			- This file
+scripts			- Directory with its own README file
+urc-input.c		- Part of handling of the modem's URC - still a work in progress
