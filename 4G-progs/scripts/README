@@ -1,0 +1,26 @@
+List of scripts in this directory. 
+
+4G-test.sh 		- Menu driven script to exercise some options of the Gemalto 4G modem
+down-pls8		- AT commmand to bring the modem down in a controlled manner.
+eoff-pls8		- Toggle the EMERG_OFF gpio pin
+get-app-port.sh		- Script to locate the GEMALTO's Application port
+gpio-pin-config.sh	- GEMALTO GPIO pin state reader
+init-modem		- Initialise the modem and enable URC
+modem-status.sh		- A collection of AT commands relevant to device infomation, device status and SIM card command
+pin-states.sh		- Prints the state of the modem's controlling GPIO pins
+README			- This file
+read-pin.sh		- Reads the value of the requested GPIO pin.
+start-pls8.sh		- Brings the PLS8 up
+
+sure			- This script is not strictly related to the modem. This is just a little script that checks all command line imput
+			- and searches for block input devices that _must_ not be written to i.e. /dev/sda. It prints a message and exits 
+			- if such a block device is located. 
+			- Usage: [sudo] sure dd if=/dev/sdd of=/dev/sda
+			-	In this case the /dev/sda would be over-written. 
+			- The 'sure' command is completely passive. I wrote is for my own purposes.
+
+up-pls8			- This script toggles the GPIO pin 36 to power on the modem. It waits for 20s for the appearance of the /dev/ttyACM* ports and
+			- the set the modem's SSRVSET
+urc-input.sh		- A work in progress 
+write-pin.sh		- Write value to specific gpio pin.
+
