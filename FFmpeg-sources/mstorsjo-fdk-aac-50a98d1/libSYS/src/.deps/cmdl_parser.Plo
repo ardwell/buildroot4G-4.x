@@ -1,0 +1,123 @@
+libSYS/src/cmdl_parser.lo: libSYS/src/cmdl_parser.cpp \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdc-predef.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/lib/gcc/arm-buildroot-linux-gnueabihf/4.9.3/include/stdarg.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdio.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/features.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/cdefs.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/wordsize.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/gnu/stubs.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/gnu/stubs-hard.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/lib/gcc/arm-buildroot-linux-gnueabihf/4.9.3/include/stddef.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/typesizes.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/libio.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/_G_config.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/wchar.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdio_lim.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sys_errlist.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdio.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/string.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/xlocale.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdlib.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/waitflags.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/waitstatus.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/endian.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/endian.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/byteswap.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/byteswap-16.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/types.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/time.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/select.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/select.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigset.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/time.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/sysmacros.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/pthreadtypes.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/alloca.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdlib-bsearch.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdlib-float.h \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/ctype.h \
+ libSYS/include/cmdl_parser.h libSYS/include/machine_type.h \
+ libSYS/include/genericStds.h
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdc-predef.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/lib/gcc/arm-buildroot-linux-gnueabihf/4.9.3/include/stdarg.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdio.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/features.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/cdefs.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/wordsize.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/gnu/stubs.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/gnu/stubs-hard.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/lib/gcc/arm-buildroot-linux-gnueabihf/4.9.3/include/stddef.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/types.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/typesizes.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/libio.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/_G_config.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/wchar.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdio_lim.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sys_errlist.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdio.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/string.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/xlocale.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdlib.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/waitflags.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/waitstatus.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/endian.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/endian.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/byteswap.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/byteswap-16.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/types.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/time.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/select.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/select.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/sigset.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/time.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/sys/sysmacros.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/pthreadtypes.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/alloca.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdlib-bsearch.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/bits/stdlib-float.h:
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/ctype.h:
+
+libSYS/include/cmdl_parser.h:
+
+libSYS/include/machine_type.h:
+
+libSYS/include/genericStds.h:

@@ -1,0 +1,14 @@
+libSYS/src/wav_file.lo: libSYS/src/wav_file.cpp \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdc-predef.h \
+ libSYS/include/wav_file.h libSYS/include/genericStds.h \
+ libSYS/include/machine_type.h libSYS/include/genericStds.h
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdc-predef.h:
+
+libSYS/include/wav_file.h:
+
+libSYS/include/genericStds.h:
+
+libSYS/include/machine_type.h:
+
+libSYS/include/genericStds.h:

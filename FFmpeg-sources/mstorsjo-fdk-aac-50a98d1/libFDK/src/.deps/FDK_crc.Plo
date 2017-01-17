@@ -1,0 +1,19 @@
+libFDK/src/FDK_crc.lo: libFDK/src/FDK_crc.cpp \
+ /mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdc-predef.h \
+ libFDK/include/FDK_crc.h libFDK/include/FDK_bitstream.h \
+ libFDK/include/FDK_bitbuffer.h libSYS/include/machine_type.h \
+ libSYS/include/genericStds.h libSYS/include/machine_type.h
+
+/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/buildroot/output/host/usr/arm-buildroot-linux-gnueabihf/sysroot/usr/include/stdc-predef.h:
+
+libFDK/include/FDK_crc.h:
+
+libFDK/include/FDK_bitstream.h:
+
+libFDK/include/FDK_bitbuffer.h:
+
+libSYS/include/machine_type.h:
+
+libSYS/include/genericStds.h:
+
+libSYS/include/machine_type.h:

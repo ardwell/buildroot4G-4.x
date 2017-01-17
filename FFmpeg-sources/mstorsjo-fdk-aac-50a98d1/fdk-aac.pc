@@ -1,0 +1,11 @@
+prefix=/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/FFmpeg-sources/ffmpeg_build
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: Fraunhofer FDK AAC Codec Library
+Description: AAC codec library
+Version: 0.1.4
+Libs: -L${libdir} -lfdk-aac -lm 
+Libs.private: 
+Cflags: -I${includedir}
