@@ -1,0 +1,14 @@
+prefix=/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/FFmpeg-sources/ffmpeg_build
+exec_prefix=${prefix}
+libdir=/mnt/users/ed/build/software/bitvu/buildroot4G-4.x/FFmpeg-sources/ffmpeg_build/lib
+includedir=${prefix}/include
+
+Name: libswscale
+Description: FFmpeg image rescaling library
+Version: 4.0.100
+Requires: libavutil >= 55.17.103
+Requires.private: 
+Conflicts:
+Libs: -L${libdir}  -lswscale -lm
+Libs.private: 
+Cflags: -I${includedir}
