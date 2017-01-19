@@ -15,7 +15,7 @@ PATH := $(CURDIR)/../buildroot/output/host/usr/bin/:$(PATH)
 # serial device is uses canonical mode i.e. input terminated with a \r character. 
 # e.g echo -e 'AT\r' > /dev/ttyACM1  # Don't forget the '-e' switch for the echo command.
 
-all: gettime hello gpio-interrupt
+all: gettime hello gpio-interrupt mmal-main buffer_demo
 
 hello : hello-world.cpp
 	$(toolchain_prefix)gcc -o hello $? --sysroot=$(sysroot)
@@ -26,5 +26,17 @@ gpio-interrupt : gpio-interrupt.c
 gettime : gettime.c
 	$(toolchain_prefix)gcc -o gettime $? --sysroot=$(sysroot)
 
+mmal-main: mmal-main.c
+	$(toolchain_prefix)gcc -o $@ $? -I$(sysroot)/usr/include/interface/vcos/pthreads/ -I$(sysroot)/usr/include/interface/vmcs_host/linux/ \
+  -lbcm_host -lmmal_util -lmmal_core -lmmal_vc_client -lmmal -lmmal_components -l:libEGL_static.a -l:libGLESv2_static.a --sysroot=$(sysroot)
+
+buffer_demo: buffer_demo.c
+	$(toolchain_prefix)gcc -o $@ $? -I$(sysroot)/usr/include/interface/vcos/pthreads/ -I$(sysroot)/usr/include/interface/vmcs_host/linux/ \
+  -lbcm_host -lmmal_util -lmmal_core -lmmal_vc_client -lmmal -lmmal_components -l:libEGL_static.a -l:libGLESv2_static.a --sysroot=$(sysroot)
+
+video_record: video_record.c
+	$(toolchain_prefix)gcc -o $@ $? -I$(sysroot)/usr/include/interface/vcos/pthreads/ -I$(sysroot)/usr/include/interface/vmcs_host/linux/ \
+  -lbcm_host -lmmal_util -lmmal_core -lmmal_vc_client -lmmal -lmmal_components -l:libEGL_static.a -l:libGLESv2_static.a --sysroot=$(sysroot)
+
 clean:
-	@rm gettime hello gpio-interrupt
+	@rm gettime hello gpio-interrupt buffer_demo mmal-main
