@@ -14,13 +14,10 @@ PATH := $(CURDIR)/../buildroot/output/host/usr/bin/:$(PATH)
 # serial device is uses canonical mode i.e. input terminated with a \r character. 
 # e.g echo -e 'AT\r' > /dev/ttyACM1  # Don't forget the '-e' switch for the echo command.
 
-.PHONY: check all
-
-check:
-	@if [ ! -d "./bin" ]; then mkdir bin; fi
+BINDIR := bin
+bin-dir := $(shell mkdir -p $(BINDIR))
 
 all: hello at-cmd canon-input modem-command non-canon-input urc-input gpio-interrupt
-	if [ ! -d "./bin" ]; then echo "bin does not exist"; fi
 
 hello : hello-world.cpp
 	$(toolchain_prefix)gcc -o bin/hello $? --sysroot=$(sysroot)
